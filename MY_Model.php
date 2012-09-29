@@ -4,7 +4,7 @@
  * CodeIgniter CRUD Model 2
  * A base model providing CRUD, pagination and validation.
  * 
- * Install this file as application/core/CRUD_Model.php
+ * Install this file as application/core/MY_Model.php
  * 
  * @package	CodeIgniter
  * @author		Jesse Terry
