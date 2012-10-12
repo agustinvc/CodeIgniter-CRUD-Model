@@ -170,7 +170,8 @@ Consider the following model:
 
 		public function num_comments()
 		{
-			$this->db->select('(SELECT COUNT(*) FROM blog_comments WHERE blog_comments.post_id = blog_posts.post_id) AS num_comments');
+			// Notice we're using $this->select instead of $this->db->select -- this is important
+			$this->select('(SELECT COUNT(*) FROM blog_comments WHERE blog_comments.post_id = blog_posts.post_id) AS num_comments');
 		}
 	}
 
@@ -182,7 +183,7 @@ And consider the following controller code:
 	// The results from the above query will be a standard select statement on the blog_posts table
 
 	// This will tell the model to also include the additional clauses / conditions / statements when building the query:
-	$posts = $this->mdl_blog_posts->get('num_comments')->result();
+	$posts = $this->mdl_blog_posts->num_comments()->get()->result();
 
 	// The results from the above query will be a standard select statement on the blog_posts table, along with the embedded subquery.
 
