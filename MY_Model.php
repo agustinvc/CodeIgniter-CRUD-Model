@@ -64,16 +64,11 @@ class MY_Model extends CI_Model {
 	 * based on methods in child model.
 	 * $this->model_name->get()
 	 */
-	public function get($with = array(), $include_defaults = true)
+	public function get($include_defaults = true)
 	{
 		if ($include_defaults)
 		{
 			$this->set_defaults();
-		}
-
-		foreach ($with as $method)
-		{
-			$this->$method();
 		}
 
 		$this->query = $this->db->get($this->table);
@@ -111,7 +106,7 @@ class MY_Model extends CI_Model {
 	 * Call when paginating results.
 	 * $this->model_name->paginate()
 	 */
-	public function paginate($with = array())
+	public function paginate()
 	{
 		$uri_segment = '';
 		$offset		 = 0;
@@ -121,11 +116,6 @@ class MY_Model extends CI_Model {
 		$this->load->library('pagination');
 
 		$this->set_defaults();
-
-		foreach ($with as $method)
-		{
-			$this->$method();
-		}
 
 		$this->total_rows = $this->db->get($this->table)->num_rows();
 
@@ -179,11 +169,6 @@ class MY_Model extends CI_Model {
             call_user_func_array(array($this->db, $func[0]), $func[1]);
         }
 
-		foreach ($with as $method)
-		{
-			$this->$method();
-		}
-
 		$this->db->limit($per_page, $offset);
 
 		$this->query = $this->db->get($this->table);
@@ -196,13 +181,8 @@ class MY_Model extends CI_Model {
 	/**
 	 * Retrieves a single record based on primary key value.
 	 */
-	public function get_by_id($id, $with = array())
+	public function get_by_id($id)
 	{
-		foreach ($with as $method)
-		{
-			$this->$method();
-		}
-
 		return $this->where($this->primary_key, $id)->get()->row();
 	}
 
