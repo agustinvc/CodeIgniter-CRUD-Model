@@ -77,7 +77,9 @@ class MY_Model extends CI_Model {
 		}
 
 		$this->query = $this->db->get($this->table);
-
+		
+		$this->user_funcs = array();
+		
 		return $this;
 	}
 
@@ -125,7 +127,7 @@ class MY_Model extends CI_Model {
 			$this->$method();
 		}
 
-		$this->total_rows = $this->db->count_all_results($this->table);
+		$this->total_rows = $this->db->get($this->table)->num_rows();
 
 		$uri_segments = $this->uri->segment_array();
 
@@ -185,7 +187,9 @@ class MY_Model extends CI_Model {
 		$this->db->limit($per_page, $offset);
 
 		$this->query = $this->db->get($this->table);
-
+		
+		$this->user_funcs = array();
+		
 		return $this;
 	}
 
@@ -378,7 +382,12 @@ class MY_Model extends CI_Model {
 	{
 		return (isset($this->form_values[$key])) ? $this->form_values[$key] : '';
 	}
-
+	
+	public function set_form_value($key, $value)
+	{
+		$this->form_values[$key] = $value;
+	}
+	
 }
 
 ?>
